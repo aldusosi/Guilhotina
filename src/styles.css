@@ -1,0 +1,108 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.title {
+  color:#113a85;
+  position:absolute;
+  left:14px;
+  top:14px;
+  text-decoration:line-through #113a85;
+}
+button {
+  cursor: pointer;
+}
+form {
+  display: flex;
+  gap: 12px;
+  flex-direction: column;
+}
+.App {
+  margin-top:8px;
+  height: 100vh;
+  display: flex;
+  place-content: center;
+  font-family: sans-serif;
+  text-align: center;
+}
+.escolher_palavra {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+.escolher_palavra input {
+  color: white;
+  height: 40px;
+  padding-left: 8px;
+  background-color: #113a85;
+  border: 2px solid #000000;
+  border-radius: 8px;
+}
+.escolher_palavra button {
+  color: white;
+  padding: 8px;
+  background-color: #113a85;
+  border: none;
+}
+.display {
+  display: flex;
+  flex-direction: column;
+  gap: 65px;
+}
+.display h3 {
+  color: #113a85;
+  height: 100px;
+  font-size: 100px;
+  margin-bottom: 10px;
+}
+.display p {
+  font-size: 28px;
+  color: #8e8f91;
+}
+.escolher_letra {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.escolher_letra input {
+  color: black;
+  width: 100px;
+  height: 125px;
+  font-size: 100px;
+  text-align: center;
+  background-color: #eae1fa;
+  border: 2px solid #012669;
+  border-radius: 10px;
+}
+.escolher_letra button {
+  color: white;
+  margin-bottom: 40px;
+  padding: 12px;
+  background-color: #263652;
+  border: none;
+}
+.alerts {
+  width: 280px;
+  height: 50px;
+}
+.error {
+  color: white;
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  background-color: #c93838;
+  border-radius: 4px;
+}
+.message {
+  color: white;
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  background-color: #42c255;
+  border-radius: 4px;
+}
