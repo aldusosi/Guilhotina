@@ -7,7 +7,15 @@ export default function App() {
   const [letrasCertas, setLetrasCertas] = useState([]);
   const [erro, setErro] = useState("");
   const [message, setMessage] = useState("");
-  //limpa as letras certas evitando que apareçam na tela
+  const [caractersEspeciais, setCaractersEspeciais] = useState([]);
+
+  //coleta todas as letras com caracters especiais de 'palavra'.
+  useEffect(()=>{
+    coletarCaractersEspeciais();
+    console.log(caractersEspeciais)
+  },[palavra]);
+
+  //limpa as letras com acertos evitando que apareçam na tela
   useEffect(() => {
     setLetrasCertas([]);
   }, [palavra.length]);
@@ -17,30 +25,59 @@ export default function App() {
     alert("função indisponivel no momento");
   }
 
+  //confere a cituação da letra escolhida.
   function conferirLetra(e) {
     e.preventDefault();
     if (palavra) {
-      if (palavra.includes(letra)) {
-        for (let item of palavra) {
+      let palavraCrua = palavra
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+      if (palavraCrua.includes(letra)) {
+        for (let item of palavraCrua) {
           if (item === letra || item === letra.toUpperCase()) {
             setErro("");
             setMessage("Acertou!");
             if (letrasCertas.includes(letra)) {
               setLetrasCertas(letrasCertas);
-              console.log(letrasCertas);
             } else {
-              setLetrasCertas([...letrasCertas, letra]);
-              verificarSeCompletou();
+              for(let i of caractersEspeciais){
+
+                if(i.normalize === letra ){
+                  if(palavra.includes(i.normalize))
+                  setLetrasCertas([...letrasCertas, i.nome, letra]);
+                  else
+                  setLetrasCertas([...letrasCertas, i.nome]);
+                }else{
+                  setLetrasCertas([...letrasCertas, letra]);
+                }
+                //confere se o usuário acertou todas as letras.
+                verificarSeCompletou()
+              }
             }
           }
         }
       } else {
         setMessage("");
-        setErro("Ops! A palavra não contém esta letra.");
+        setErro("Ops! A palavra não contém essa letra.");
       }
       setLetra("");
     } else {
       setErro("Você precisa de uma palavra para começar.");
+    }
+  }
+
+  function coletarCaractersEspeciais(){
+    //CRIA UM ARRAY DE OBJETOS DE CARACTERS ESPECIAIS
+    for (let i of palavra) {
+      if (i.normalize("NFD")[1]) {
+        let index = palavra.indexOf(i);
+        let objectEspecial = {
+          nome: i,
+          index: index,
+          normalize: i.normalize("NFD")[0]
+        };
+        setCaractersEspeciais([...caractersEspeciais, objectEspecial]);
+      }
     }
   }
 
