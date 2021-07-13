@@ -10,10 +10,9 @@ export default function App() {
   const [caractersEspeciais, setCaractersEspeciais] = useState([]);
 
   //coleta todas as letras com caracters especiais de 'palavra'.
-  useEffect(()=>{
+  /* useEffect(()=>{
     coletarCaractersEspeciais();
-    console.log(caractersEspeciais)
-  },[palavra]);
+  },[palavra]); */
 
   //limpa as letras com acertos evitando que apareçam na tela
   useEffect(() => {
@@ -28,6 +27,7 @@ export default function App() {
   //confere a cituação da letra escolhida.
   function conferirLetra(e) {
     e.preventDefault();
+    coletarCaractersEspeciais();
     if (palavra) {
       let palavraCrua = palavra.normalize("NFD").replace(/[\u0300-\u036f]/g, "");//retorna a palavra sem caracters especiais.
 
@@ -97,7 +97,6 @@ export default function App() {
     for (let item of palavra) {
       if (!LetrasNaoRepetidasDePalavra.includes(item)) {
         LetrasNaoRepetidasDePalavra += item;
-        console.log(letrasCertas.length);
       }
     }
     if (letrasCertas.length === LetrasNaoRepetidasDePalavra.length - 1) {
