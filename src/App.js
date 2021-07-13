@@ -29,30 +29,39 @@ export default function App() {
   function conferirLetra(e) {
     e.preventDefault();
     if (palavra) {
-      let palavraCrua = palavra
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "");
+      let palavraCrua = palavra.normalize("NFD").replace(/[\u0300-\u036f]/g, "");//retorna a palavra sem caracters especiais.
+
       if (palavraCrua.includes(letra)) {
         for (let item of palavraCrua) {
-          if (item === letra || item === letra.toUpperCase()) {
+          if (item === letra) {
             setErro("");
             setMessage("Acertou!");
             if (letrasCertas.includes(letra)) {
               setLetrasCertas(letrasCertas);
             } else {
-              for(let i of caractersEspeciais){
+              if(caractersEspeciais.length > 0){
+                console.log("especialmente")
+                console.log(caractersEspeciais)
+                for(let i of caractersEspeciais){
 
-                if(i.normalize === letra ){
-                  if(palavra.includes(i.normalize))
-                  setLetrasCertas([...letrasCertas, i.nome, letra]);
-                  else
-                  setLetrasCertas([...letrasCertas, i.nome]);
-                }else{
-                  setLetrasCertas([...letrasCertas, letra]);
+                  if(i.normalize === letra){
+                    if(palavra.includes(i.normalize))
+                    setLetrasCertas([...letrasCertas, i.nome, letra]);
+                    else
+                    setLetrasCertas([...letrasCertas, i.nome]);
+                  }else{
+                    setLetrasCertas([...letrasCertas, letra]);
+                  }
+                  //confere se o usuário acertou todas as letras.
+                  verificarSeCompletou()
                 }
+              }else{
+                console.log("Não especialmente")
+                setLetrasCertas([...letrasCertas, letra]);
                 //confere se o usuário acertou todas as letras.
                 verificarSeCompletou()
               }
+              verificarSeCompletou()
             }
           }
         }
@@ -62,12 +71,13 @@ export default function App() {
       }
       setLetra("");
     } else {
+      setMessage("")
       setErro("Você precisa de uma palavra para começar.");
     }
   }
 
   function coletarCaractersEspeciais(){
-    //CRIA UM ARRAY DE OBJETOS DE CARACTERS ESPECIAIS
+    //cria um array de objetos de caracters especiais.
     for (let i of palavra) {
       if (i.normalize("NFD")[1]) {
         let index = palavra.indexOf(i);
@@ -93,18 +103,21 @@ export default function App() {
     if (letrasCertas.length === LetrasNaoRepetidasDePalavra.length - 1) {
       setMessage("Parabéns! Você completou!");
       setPalavra("");
+      setLetrasCertas("");
+      setCaractersEspeciais("");
     }
   }
 
   return (
     <div className="App">
-      <h1 className="title">Guilhotina</h1>
+      
       <form>
+        <h1 className="title">Guilhotina</h1>
         <div className="escolher_palavra">
           <input
             type="password"
             value={palavra}
-            onChange={(e) => setPalavra(e.target.value)}
+            onChange={(e) => setPalavra(e.target.value.toLowerCase())}
             placeHolder="palavra..."
           />
           <span>ou</span>
@@ -133,7 +146,7 @@ export default function App() {
               type="text"
               maxLength="1"
               value={letra}
-              onChange={(e) => setLetra(e.target.value)}
+              onChange={(e) => setLetra(e.target.value.toLowerCase())}
             />
           </div>
           <div>

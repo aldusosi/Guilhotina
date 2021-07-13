@@ -3,29 +3,43 @@
   padding: 0;
   box-sizing: border-box;
 }
-.title {
-  color:#113a85;
-  position:absolute;
-  left:14px;
-  top:14px;
-  text-decoration:line-through #113a85;
+
+.title{
+    color:#113a85;
+    position:inherit;
+    bottom:5px;
+    margin-left:14px;
+    margin-top:30px;
+    margin-bottom:30px;
+    text-decoration:line-through #113a85;
+}
+
+@media(min-width: 860px){
+  .title{
+    position:fixed;
+    left:14px;
+    top:20px;
+    text-align:left;
+  }
 }
 button {
   cursor: pointer;
 }
 form {
+  height:100%;
   display: flex;
-  gap: 12px;
   flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
 }
-.App {
-  margin-top:8px;
-  height: 100vh;
-  display: flex;
-  place-content: center;
-  font-family: sans-serif;
-  text-align: center;
-}
+.App{
+    height:100vh;
+    display:flex;
+    place-content:center;
+    flex-direction:column;
+    padding:40px;
+    text-align:center;
+  }
 .escolher_palavra {
   display: flex;
   justify-content: center;
