@@ -27,7 +27,6 @@ export default function App() {
   //confere a cituação da letra escolhida.
   function conferirLetra(e) {
     e.preventDefault();
-    coletarCaractersEspeciais();
     if (palavra) {
       let palavraCrua = palavra.normalize("NFD").replace(/[\u0300-\u036f]/g, "");//retorna a palavra sem caracters especiais.
 
@@ -145,6 +144,7 @@ export default function App() {
               type="text"
               maxLength="1"
               value={letra}
+              onClick={coletarCaractersEspeciais}
               onChange={(e) => setLetra(e.target.value.toLowerCase())}
             />
           </div>
